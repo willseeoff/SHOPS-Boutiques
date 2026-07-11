@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- ===== SEO ===== -->
+<title>CREPE N' WAFFLE — Crêperie & Gaufrerie artisanale à Oullins</title>
+<meta name="description" content="CREPE N' WAFFLE — crêpes, gaufres, burgers et desserts gourmands à Oullins-Pierre-Bénite. Sur place, à emporter et livraison. Ouvert tous les jours jusqu'à 23h30." />
+<meta name="keywords" content="crêperie Oullins, gaufres, crêpe Nutella, burger, livraison, à emporter, Pierre-Bénite, Lyon 69600" />
+<meta name="theme-color" content="#161311" />
+<meta name="author" content="CREPE N' WAFFLE" />
+<link rel="canonical" href="https://crepe-n-waffle.fr/" />
+
+<!-- ===== Open Graph ===== -->
+<meta property="og:type" content="restaurant" />
+<meta property="og:title" content="CREPE N' WAFFLE — Crêpes & Gaufres artisanales" />
+<meta property="og:description" content="L'art de la crêpe gourmande à Oullins. Sur place · à emporter · livraison. Ouvert jusqu'à 23h30." />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:site_name" content="CREPE N' WAFFLE" />
+<meta property="og:image" content="assets/crepe-hero.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="assets/crepe-hero.jpg" />
+
+<!-- ===== Favicon ===== -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23201A15'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle'%3E%F0%9F%A5%9E%3C/text%3E%3C/svg%3E" />
+
+<!-- ===== Polices (self-host) ===== -->
+<link rel="stylesheet" href="css/fonts.css" />
+<link rel="stylesheet" href="css/style.css" />
+
+<!-- ===== GSAP + Lenis (vendored, globaux) ===== -->
+<script defer src="vendor/gsap.min.js"></script>
+<script defer src="vendor/ScrollTrigger.min.js"></script>
+<script defer src="vendor/lenis.min.js"></script>
+
+<!-- ===== Données structurées (SEO local) ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "CREPE N' WAFFLE",
+  "servesCuisine": ["Crêperie", "Gaufres", "Desserts", "Burgers"],
+  "priceRange": "€",
+  "telephone": "+33478481189",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "5 Rue du Professeur Fleming",
+    "addressLocality": "Oullins-Pierre-Bénite",
+    "postalCode": "69600",
+    "addressCountry": "FR"
+  },
+  "openingHours": "Mo-Su 11:00-23:30",
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.4", "reviewCount": "60" },
+  "url": "https://crepe-n-waffle.fr/"
+}
+</script>
+</head>
+
+<body>
+
+<!-- ===================== LOADER ===================== -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__mark">🥞</div>
+  <div class="loader__bar"><span id="loaderFill"></span></div>
+  <div class="loader__pct" id="loaderPct">0%</div>
+</div>
+
+<!-- ===================== CURSEUR ===================== -->
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <a href="#hero" class="nav__logo">CREPE&nbsp;N'&nbsp;<span>WAFFLE</span></a>
+  <nav class="nav__links" id="navLinks" aria-label="Navigation principale">
+    <a href="#specialites">Spécialités</a>
+    <a href="#menu">Menu</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a href="tel:+33478481189" class="btn btn--pill nav__cta" data-magnetic>Commander</a>
+  <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+</header>
+
+<!-- ===================== CANVAS 3D (fixe, arrière-plan du hero) ===================== -->
+<canvas id="scene" class="scene-canvas" aria-hidden="true"></canvas>
+<div class="scene-fallback" id="sceneFallback" aria-hidden="true"></div>
+
+<main>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero">
+    <div class="hero__inner">
+      <p class="hero__eyebrow" data-hero="up">Crêperie · Gaufrerie · Oullins</p>
+      <h1 class="hero__title">
+        <span data-hero="up">L'art de la</span>
+        <span class="hero__title-em" data-hero="up">crêpe gourmande</span>
+      </h1>
+      <p class="hero__sub" data-hero="up">Faites défiler — regardez la crêpe se napper de Nutella et se voiler de sucre glace.</p>
+      <div class="hero__actions" data-hero="up">
+        <a href="#menu" class="btn btn--solid" data-magnetic>Voir le menu</a>
+        <a href="tel:+33478481189" class="btn btn--ghost" data-magnetic>Commander</a>
+      </div>
+      <div class="hero__rating" data-hero="up">
+        <span class="stars">★★★★<span class="stars__half">★</span></span>
+        <strong>4,4</strong> · Ouvert jusqu'à 23h30
+      </div>
+    </div>
+    <div class="hero__scroll" id="heroScroll"><span></span>défiler</div>
+  </section>
+
+  <!-- ===================== BANDEAU CONFIANCE ===================== -->
+  <section class="trust">
+    <div class="trust__item"><b data-count="4.4" data-dec="1">0</b><span>note Google ★</span></div>
+    <div class="trust__item"><b data-count="30" data-suffix="+">0</b><span>recettes gourmandes</span></div>
+    <div class="trust__item"><b>23h30</b><span>ouvert tous les jours</span></div>
+    <div class="trust__item"><b>3</b><span>sur place · emporter · livraison</span></div>
+  </section>
+
+  <!-- ===================== SPÉCIALITÉS ===================== -->
+  <section class="section specialites" id="specialites">
+    <header class="section__head">
+      <p class="section__kicker" data-reveal>Nos spécialités</p>
+      <h2 class="section__title" data-reveal>Le meilleur du sucré<br>et du salé, fait minute</h2>
+    </header>
+    <div class="cards">
+      <article class="card" data-reveal data-tilt data-img="assets/spec-crepe.jpg">
+        <div class="card__media"><span class="card__emoji">🥞</span></div>
+        <h3>Crêpes garnies</h3>
+        <p>Nutella, banane, chantilly, caramel beurre salé… pliées en triangle, dorées à la plaque.</p>
+        <span class="card__price">dès 3,50 €</span>
+      </article>
+      <article class="card" data-reveal data-tilt data-img="assets/spec-gaufre.jpg">
+        <div class="card__media"><span class="card__emoji">🧇</span></div>
+        <h3>Gaufres de Liège</h3>
+        <p>Croustillantes dehors, moelleuses dedans. Nappage chocolat, sucre glace, fruits frais.</p>
+        <span class="card__price">dès 4,00 €</span>
+      </article>
+      <article class="card" data-reveal data-tilt data-img="assets/spec-milkshake.jpg">
+        <div class="card__media"><span class="card__emoji">🥤</span></div>
+        <h3>Milkshakes</h3>
+        <p>Onctueux et généreux : fruits rouges, banane, chantilly maison.</p>
+        <span class="card__price">dès 5,50 €</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== MENU (concept « à composer », d'après les planches) ===================== -->
+  <section class="section menu" id="menu">
+    <header class="section__head">
+      <p class="section__kicker" data-reveal>La carte</p>
+      <h2 class="section__title" data-reveal>Composez votre crêpe</h2>
+      <p class="menu__intro" data-reveal>Une base, vos garnitures, vos toppings — c'est vous le chef.</p>
+    </header>
+
+    <div class="menu__tabs" role="tablist" aria-label="Carte sucrée ou salée" data-reveal>
+      <button class="menu-tab is-active" role="tab" aria-selected="true" aria-controls="panel-sucre" data-tab="sucre">🍫 Sucré</button>
+      <button class="menu-tab" role="tab" aria-selected="false" aria-controls="panel-sale" data-tab="sale">🧀 Salé</button>
+    </div>
+
+    <!-- ------ SUCRÉ (planche rose « Composez vos desserts ») ------ -->
+    <div class="menu-panel menu-panel--sucre is-active" id="panel-sucre" role="tabpanel">
+      <div class="compose">
+        <div class="compose__step">
+          <h3><i>1</i> La base</h3>
+          <div class="chips">
+            <span class="chip">🥞 Crêpe</span>
+            <span class="chip">🧇 Gaufre</span>
+          </div>
+        </div>
+        <div class="compose__step">
+          <h3><i>2</i> Gourmandises</h3>
+          <div class="chips">
+            <span class="chip">🍫 Nutella</span>
+            <span class="chip">🤍 Chocolat blanc</span>
+            <span class="chip">🍯 Caramel beurre salé</span>
+            <span class="chip">🍪 Spéculoos</span>
+            <span class="chip">💚 Pistache</span>
+            <span class="chip">🍓 Confiture</span>
+          </div>
+        </div>
+        <div class="compose__step">
+          <h3><i>3</i> Fruits</h3>
+          <div class="chips">
+            <span class="chip">🍌 Banane</span>
+            <span class="chip">🍓 Fraise</span>
+            <span class="chip">🫐 Framboise</span>
+            <span class="chip">🥥 Noix de coco</span>
+          </div>
+        </div>
+        <div class="compose__step">
+          <h3><i>4</i> Toppings</h3>
+          <div class="chips">
+            <span class="chip">🌀 Chantilly</span>
+            <span class="chip">🖤 Oreo</span>
+            <span class="chip">🌈 M&amp;M's</span>
+            <span class="chip">🍬 Kinder Bueno</span>
+            <span class="chip">🥜 Amandes</span>
+            <span class="chip">🍨 Boule de glace</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ------ SALÉ (planche sombre « Composez vos crêpes SALÉE ») ------ -->
+    <div class="menu-panel menu-panel--sale" id="panel-sale" role="tabpanel" hidden>
+      <div class="compose">
+        <div class="compose__step">
+          <h3><i>1</i> La base</h3>
+          <div class="chips">
+            <span class="chip">🥞 Crêpe de froment · Emmental</span>
+          </div>
+        </div>
+        <div class="compose__step">
+          <h3><i>2</i> Fromages</h3>
+          <div class="chips">
+            <span class="chip">🧀 Emmental</span>
+            <span class="chip">🐐 Chèvre</span>
+            <span class="chip">🤍 Mozzarella</span>
+            <span class="chip">🫕 Raclette</span>
+          </div>
+        </div>
+        <div class="compose__step">
+          <h3><i>3</i> Garnitures</h3>
+          <div class="chips">
+            <span class="chip">🍖 Jambon</span>
+            <span class="chip">🍗 Poulet mariné</span>
+            <span class="chip">🥩 Viande hachée</span>
+            <span class="chip">🥓 Lardons</span>
+            <span class="chip">🍄 Champignons</span>
+            <span class="chip">🧅 Oignons</span>
+            <span class="chip">🍅 Tomates</span>
+          </div>
+        </div>
+        <div class="compose__step">
+          <h3><i>4</i> Sauces</h3>
+          <div class="chips">
+            <span class="chip">🥛 Crème fraîche</span>
+            <span class="chip">🧀 Sauce fromagère</span>
+            <span class="chip">🌶️ Algérienne</span>
+            <span class="chip">🔥 Barbecue</span>
+            <span class="chip">🍛 Curry</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="menu__note" data-reveal>Tarifs des bases et suppléments affichés en boutique — retrouvez les planches complètes ci-dessous.</p>
+  </section>
+
+  <!-- ===================== CARTE EN IMAGES (planches menu) ===================== -->
+  <section class="section menu-photos" id="carte" hidden>
+    <header class="section__head">
+      <p class="section__kicker" data-reveal>La carte complète</p>
+      <h2 class="section__title" data-reveal>Notre carte en images</h2>
+    </header>
+    <div class="menu-photos__grid">
+      <a class="menu-photos__item" href="assets/menu-1.jpg" target="_blank" rel="noopener" data-reveal>
+        <img data-src="assets/menu-1.jpg" alt="Planche « Composez vos desserts » — sucrés" loading="lazy" />
+      </a>
+      <a class="menu-photos__item" href="assets/menu-2.jpg" target="_blank" rel="noopener" data-reveal>
+        <img data-src="assets/menu-2.jpg" alt="Planche « Composez vos crêpes » — salées" loading="lazy" />
+      </a>
+      <a class="menu-photos__item" href="assets/menu-3.jpg" target="_blank" rel="noopener" data-reveal>
+        <img data-src="assets/menu-3.jpg" alt="Carte CREPE N' WAFFLE — complément" loading="lazy" />
+      </a>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="cta">
+    <div class="cta__inner" data-reveal>
+      <h2>Une petite faim ?</h2>
+      <p>Commandez en deux minutes, on s'occupe du reste.</p>
+      <div class="cta__actions">
+        <a href="tel:+33478481189" class="btn btn--solid" data-magnetic>Appeler · 04 78 48 11 89</a>
+        <a href="https://maps.google.com/?q=5+Rue+du+Professeur+Fleming+69600+Oullins" target="_blank" rel="noopener" class="btn btn--ghost" data-magnetic>Itinéraire</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AVIS ===================== -->
+  <section class="section reviews" id="avis">
+    <header class="section__head">
+      <p class="section__kicker" data-reveal>Ils se régalent</p>
+      <h2 class="section__title" data-reveal>4,4 ★ sur Google</h2>
+    </header>
+    <div class="reviews__grid">
+      <blockquote class="review" data-reveal data-tilt>
+        <div class="review__stars">★★★★★</div>
+        <p>« Les meilleures crêpes du coin, généreuses et vraiment gourmandes. Le Nutella-banane est une tuerie. »</p>
+        <cite>— Sarah B.</cite>
+      </blockquote>
+      <blockquote class="review" data-reveal data-tilt>
+        <div class="review__stars">★★★★★</div>
+        <p>« Accueil au top, gaufres croustillantes et service rapide même tard le soir. On revient ! »</p>
+        <cite>— Karim L.</cite>
+      </blockquote>
+      <blockquote class="review" data-reveal data-tilt>
+        <div class="review__stars">★★★★<span style="opacity:.4">★</span></div>
+        <p>« Parfait pour une pause sucrée après le ciné. Portions généreuses, prix corrects. »</p>
+        <cite>— Émilie R.</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="section contact" id="contact">
+    <div class="contact__info">
+      <p class="section__kicker" data-reveal>Nous trouver</p>
+      <h2 class="section__title" data-reveal>Passez nous voir</h2>
+      <ul class="contact__list" data-reveal>
+        <li><b>Adresse</b>5 Rue du Professeur Fleming,<br>69600 Oullins-Pierre-Bénite</li>
+        <li><b>Téléphone</b><a href="tel:+33478481189">04 78 48 11 89</a></li>
+        <li><b>Horaires</b>Tous les jours · 11h00 – 23h30</li>
+      </ul>
+      <form class="contact__form" id="contactForm" novalidate data-reveal>
+        <div class="field"><input type="text" id="name" name="name" required placeholder=" " /><label for="name">Votre nom</label></div>
+        <div class="field"><input type="email" id="email" name="email" required placeholder=" " /><label for="email">Votre email</label></div>
+        <div class="field"><textarea id="msg" name="msg" rows="3" required placeholder=" "></textarea><label for="msg">Votre message</label></div>
+        <button type="submit" class="btn btn--solid" data-magnetic>Envoyer</button>
+        <p class="contact__note" id="formNote" role="status"></p>
+      </form>
+    </div>
+    <a class="contact__map" href="https://maps.google.com/?q=5+Rue+du+Professeur+Fleming+69600+Oullins" target="_blank" rel="noopener" data-reveal>
+      <span class="contact__pin">📍</span>
+      <span>Ouvrir dans Google Maps</span>
+    </a>
+  </section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="footer__brand">CREPE N' <span>WAFFLE</span></div>
+  <nav class="footer__nav" aria-label="Pied de page">
+    <a href="#specialites">Spécialités</a>
+    <a href="#menu">Menu</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <p class="footer__meta">5 Rue du Professeur Fleming, 69600 Oullins · 04 78 48 11 89 · Ouvert jusqu'à 23h30</p>
+  <p class="footer__copy">© <span id="year"></span> CREPE N' WAFFLE — Fait maison, avec gourmandise.</p>
+</footer>
+
+<a href="tel:+33478481189" class="mobile-cta" aria-label="Appeler">Commander&nbsp;· Appeler</a>
+
+<script defer src="js/app.js"></script>
+</body>
+</html>

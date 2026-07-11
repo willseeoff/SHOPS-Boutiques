@@ -1,0 +1,88 @@
+# 🥞 CREPE N' WAFFLE — Site vitrine premium
+
+Site vitrine immersif (niveau agence) avec une **scène 3D temps réel** dans le hero :
+une crêpe pliée en triangle apparaît au chargement, puis **se nappe de Nutella et se
+voile de sucre glace au fil du scroll**, jusqu'au rendu de la photo de référence.
+
+100 % statique, **aucune dépendance à installer, aucune requête externe** (Three.js,
+GSAP, Lenis et les polices sont embarqués dans `vendor/`).
+
+## Lancer
+
+```bash
+# depuis ce dossier
+python3 -m http.server 8000
+# puis ouvrir http://localhost:8000
+```
+> Un simple double-clic sur `index.html` fonctionne aussi, mais un serveur local est
+> recommandé (les modules ES et la 3D se chargent de façon plus fiable).
+
+## Structure
+
+```
+crepe-n-waffle/
+├── index.html          → structure + SEO + JSON-LD (Restaurant)
+├── css/
+│   ├── style.css       → design system, sections, responsive, dark
+│   └── fonts.css       → @font-face (polices self-host)
+├── js/
+│   └── app.js          → scène 3D (Three.js) + scroll (GSAP/Lenis) + UI
+├── vendor/             → Three.js, GSAP, ScrollTrigger, Lenis, polices (embarqués)
+└── assets/             → (réservé pour de vraies photos)
+```
+
+## La scène 3D (hero)
+
+- **Crêpe** : géométrie procédurale (triangle plié arrondi) + texture dorée peinte
+  (plis, cuisson) + reliefs organiques + matériau PBR.
+- **Nutella** : tube 3D brillant (clearcoat) qui **se dessine de l'arrière vers l'avant**,
+  révélé par la progression du scroll.
+- **Sucre glace** : système de particules (shader) qui **tombe et se dépose** sur la
+  crêpe et l'ardoise, quantité pilotée par le scroll.
+- **Rendu** : environnement PBR (reflets), lumières clé/rim/fill, ombres douces,
+  tone mapping filmique, léger « pop » de lumière en fin de séquence.
+- **Scroll** : le hero est épinglé (GSAP ScrollTrigger) et la garniture est mappée à la
+  progression ; smooth scroll via Lenis. Réversible en remontant.
+
+### Régler l'effet
+Dans `js/app.js`, méthode `setProgress()` : les seuils `smoothstep(...)` définissent
+quand le chocolat se dessine (`0.12 → 0.55`) et quand le sucre tombe (`0.45 → 0.94`).
+La longueur de la séquence se règle via `end: '+=230%'` dans `initScroll()`.
+
+## Robustesse & performances
+- **Fallback** automatique si WebGL indisponible (`body.no-webgl`) ou `prefers-reduced-motion`.
+- Rendu 3D mis en pause hors du hero (économie GPU), DPR plafonné, ombres désactivées
+  sur mobile, moins de particules sur tactile.
+- Polices `font-display:swap`, images/rendu au-dessus de la ligne de flottaison prioritaires.
+
+## ✨ Images Higgsfield (photoréalistes)
+
+Deux visuels photoréalistes ont été générés via Higgsfield. Le site les utilise
+**automatiquement** dès qu'ils sont présents dans `assets/` (sinon il garde le rendu
+procédural / le dégradé de repli — rien ne casse) :
+
+| Fichier attendu | Rôle sur le site | Source |
+|---|---|---|
+| `assets/crepe-hero.jpg` | image Open Graph (partage) + fond de repli si WebGL indisponible | crêpe nappée (money shot) |
+| `assets/crepe-texture.png` | texture de la crêpe 3D (remplace la texture procédurale du hero) | crêpe nature, vue de dessus |
+| `assets/spec-crepe.jpg` | carte « Crêpes garnies » (remplace l'emoji) | crêpe Nutella-banane |
+| `assets/spec-gaufre.jpg` | carte « Gaufres de Liège » (remplace l'emoji) | gaufre chocolat |
+| `assets/spec-burger.jpg` | carte « Burgers maison » (remplace l'emoji) | burger + frites |
+| `assets/menu-1.jpg` · `menu-2.jpg` · `menu-3.jpg` | section « Notre carte en images » (vos planches de menu) | vos photos de carte |
+
+> La section « carte en images » **reste masquée** tant qu'aucune planche n'est déposée ;
+> elle apparaît automatiquement dès qu'au moins une image `menu-*.jpg` est présente.
+
+> ⬇️ **Comment les récupérer** : ouvrez-les depuis votre bibliothèque Higgsfield (ou via
+> les liens fournis dans le chat), téléchargez-les, renommez-les comme ci-dessus et
+> déposez-les dans `crepe-n-waffle/assets/`. Rechargez la page : le site se met à niveau seul.
+>
+> Astuce : `crepe-texture.png` étant une vue de dessus quasi plein cadre, elle se plaque
+> proprement sur le dessus de la crêpe 3D.
+
+## À personnaliser
+1. **Photos** : déposez vos images dans `assets/` et référencez-les (cartes, galerie).
+2. **Menu / prix** : directement dans `index.html` (section `#menu`).
+3. **Formulaire** : branchez [Formspree](https://formspree.io) ou [Web3Forms](https://web3forms.com)
+   sur `<form id="contactForm">` pour recevoir les messages.
+4. **Coordonnées / horaires** : déjà renseignés (Oullins, 04 78 48 11 89) — à ajuster si besoin.
